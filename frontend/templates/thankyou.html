@@ -1,0 +1,23 @@
+<html lang="en" ng-app="[[ng_app_id]]" ng-controller="ThankyouPageCtrl" ng-cloak>
+<div class="other-header">
+    
+	[% include('header.html') %]
+     
+</div>
+<div class="other-ban">
+	<h1>Thank you</h1>
+	<nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+		<ol class="breadcrumb justify-content-center">
+			<li class="breadcrumb-item"><a href="index">Home</a></li>
+			<li class="breadcrumb-item active" aria-current="page">Thankyou</li>
+		</ol>
+	</nav>
+</div>
+<div style="padding:3rem 0;text-align:center;">
+<h1> Your Order Id:</h1>
+<h3> [[order_id]]</h3>
+<h2>For Any Query Mail Us:</h2>
+<h5> [[domain_support_email]]</h5>
+</div>
+
+[% include('footer.html') %]
