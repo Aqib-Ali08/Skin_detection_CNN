@@ -1,0 +1,172 @@
+
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>The Skin Diagonesis</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+     <link rel="stylesheet" href="../css/style.css">
+     
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light top-nav">
+  <div class="container">
+    <a class="navbar-brand" href="index">
+        <img src="../images/logo-f.png" width="150px">
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item">
+          <a class="nav-link" aria-current="page" href="index.html">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="works.html">How It Works</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="about.html">About</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="predict.html">Predict</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="resources.html">Resources</a>
+          </li>
+        <li class="nav-item">
+          <a class="nav-link" href="contact.html">Contact Us</a>
+        </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="container" style="padding: 15rem 0rem 10rem;">
+    <div class="mb-3">
+        <form action="thankyou.html" method="post" enctype="multipart/form-data" id="uploadForm">
+        <label for="formFile" class="form-label">Upload Your Image</label>
+        <input class="form-control" type="file" id="imageUpload" name="image" accept="image/*" required>
+        <button type="submit" class="btn btn-primary my-3">Upload</button>
+        </form>
+        <img id="preview" >
+      </div>
+</div>
+
+
+
+
+<footer class="footer">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-4 col-12">
+				<img src="../images/logo-f.png" width="180px"><br>
+				<img src="../images/cart.png">
+			</div>
+			<div class="col-md-4 col-12">
+				<ul class="footer-cont">
+					<h1>Contact Info</h1>
+					<li>
+						<h2>Address:</h2>
+						<p>The Skin Diagonesis<br>XYZ</p>
+					</li>
+					<li>
+						<h2>Phone:</h2>
+						<p>0000000000</p>
+					</li>
+					<li>
+						<h2>Email:</h2>
+						<p>test@gmail.com</p>
+					</li>
+				</ul>
+			</div>
+			<div class="col-md-4 col-12">
+				<ul class="footer-cont">
+					<h1>Quick Links</h1>
+					<li>
+						<a href="index">Home</a>
+					</li>
+					<li>
+						<a href="shop">Products</a>
+					</li>
+					<li>
+						<a href="terms">Terms & condition</a>
+					</li>
+					<li>
+						<a href="privacy">Privacy Policy</a>
+					</li>
+					<li>
+						<a href="contact">Contact Us</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	<hr class="bg-white">
+	<span class="footer-copyright">Copyright &copy; The Skin Diagonesis All Rights Reserved</span>
+	</div>
+	</footer>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+	<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+	<script>
+	  AOS.init();
+	</script>
+    <script>
+        window.onload=function(){
+        const apiEndpoint = 'https://example.com/api/upload'; // Replace with your API endpoint
+
+        document.getElementById('imageUpload').addEventListener('change', function (event) {
+            const file = event.target.files[0];
+            if (file) {
+                // Preview the image
+                const preview = document.getElementById('preview');
+                const reader = new FileReader();
+
+                reader.onload = function (e) {
+                    preview.src = e.target.result;
+                    preview.style.display = 'block';
+                };
+
+                reader.readAsDataURL(file);
+            }
+        });
+
+        document.getElementById('uploadForm').addEventListener('submit', async function (event) {
+            event.preventDefault(); // Prevent form from reloading the page
+
+            const fileInput = document.getElementById('imageUpload');
+            const file = fileInput.files[0];
+
+            if (file) {
+                const formData = new FormData();
+                formData.append('image', file);
+
+                try {
+                    const response = await fetch(apiEndpoint, {
+                        method: 'POST',
+                        body: formData,
+                    });
+
+                    if (response.ok) {
+                        const result = await response.json(); // Parse the JSON response
+                        alert('Image uploaded successfully! Response: ' + JSON.stringify(result));
+                    } else {
+                        const errorText = await response.text();
+                        alert('Failed to upload image. Server responded with: ' + errorText);
+                    }
+                } catch (error) {
+                    console.error('Error uploading image:', error);
+                    alert('An error occurred during upload.');
+                }
+            } else {
+                alert('Please select an image before uploading.');
+            }
+        });
+    }
+    </script>
+</body>
+
+</html>
