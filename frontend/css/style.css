@@ -988,7 +988,13 @@ input[type="Submit"]:hover {
 }
 
 
-
+.profile-pic{
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    margin: 2rem auto;
+    border-radius: 50%;
+}
 .loader {
     width: 50px;
     aspect-ratio: 1;

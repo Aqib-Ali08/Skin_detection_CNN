@@ -10,7 +10,6 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
   <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
   <link rel="stylesheet" href="../css/style.css">
-
 </head>
 
 <body>
@@ -40,23 +39,19 @@
           <li class="nav-item">
             <a class="nav-link" href="resources.html">Resources</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="contact.html">Contact Us</a>
-          </li>
-
         </ul>
       </div>
     </div>
   </nav>
 
-  <div class="container" style="padding: 15rem 0rem 10rem;">
+  <div class="container" style="padding: 10rem 0rem 4rem;">
     <div class="mb-3">
       <form action="thankyou.html" method="post" enctype="multipart/form-data" id="uploadForm">
         <label for="formFile" class="form-label">Upload Your Image</label>
         <input class="form-control" type="file" id="imageUpload" name="image" accept="image/*" required>
         <button type="submit" class="btn btn-primary my-3">Upload</button>
       </form>
-      <img id="preview">
+      <img id="preview" style="max-width: 400px;">
       <div id="loader-cont" style="display: none;">
         <div class="loader"></div>
       </div>
@@ -65,6 +60,8 @@
         <div class="loader"></div>
       </div>
       <div id="result2"></div>
+      <div id="markdown-container"></div>
+
     </div>
   </div>
 
@@ -75,16 +72,11 @@
     <div class="container">
       <div class="row">
         <div class="col-md-4 col-12">
-          <img src="../images/logo-f.png" width="180px"><br>
-          <img src="../images/cart.png">
+          <img src="../images/logo-white.png" width="180px"><br>
         </div>
         <div class="col-md-4 col-12">
           <ul class="footer-cont">
             <h1>Contact Info</h1>
-            <li>
-              <h2>Address:</h2>
-              <p>The Skin Diagonesis<br>XYZ</p>
-            </li>
             <li>
               <h2>Phone:</h2>
               <p>0000000000</p>
@@ -99,19 +91,16 @@
           <ul class="footer-cont">
             <h1>Quick Links</h1>
             <li>
-              <a href="index">Home</a>
+              <a href="index.html">Home</a>
             </li>
             <li>
-              <a href="shop">Products</a>
+              <a href="works.html">How It Works</a>
             </li>
             <li>
-              <a href="terms">Terms & condition</a>
+              <a href="about.html">About</a>
             </li>
             <li>
-              <a href="privacy">Privacy Policy</a>
-            </li>
-            <li>
-              <a href="contact">Contact Us</a>
+              <a href="predict.html">Predict</a>
             </li>
           </ul>
         </div>
@@ -124,9 +113,11 @@
     integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
     crossorigin="anonymous"></script>
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/showdown@2.1.0/dist/showdown.min.js"></script>
+
   <script>
     AOS.init();
-    </script>
+  </script>
   <script>
     window.onload = function () {
       const result = document.querySelector('#result');
@@ -196,8 +187,8 @@
           console.log('Please select an image before uploading.');
         }
       });
-      const API_KEY = "AIzaSyBcAiSN7u4i3vKm2chLkrZxAyeHWvWyamQ";
-      const endpoint2 = "https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=" + API_KEY
+      const API_KEY = "AIzaSyA3os9cmfeT0oeKd8pX4Xsi84FKKcyH1YI";
+      const endpoint2 = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=" + API_KEY
 
       async function generateResponse() {
         const loader2 = document.querySelector('#loader-cont2');
@@ -231,11 +222,16 @@
             const response = data;
             console.log(response.candidates[0].content.parts[0].text);
             text = response.candidates[0].content.parts[0].text
-            const html = preprocessText(text)
+
+            const converter = new showdown.Converter();
+            const htmlContent = converter.makeHtml(text);
+
+
+            // const html = preprocessText(text)
             setTimeout(() => {
               loader2.style.display = 'none';
-              result2.style.display = 'block';
-              result2.innerHTML = html;
+              // result2.style.display = 'block';
+              document.getElementById("markdown-container").innerHTML = htmlContent;
             }, 1000)
           })
           .catch(error => {
