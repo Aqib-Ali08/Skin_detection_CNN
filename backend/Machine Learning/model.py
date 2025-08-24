@@ -9,22 +9,15 @@ from tensorflow import keras
 from keras import layers
 from keras import Sequential
 
-
-
 d_train = pathlib.Path("C:\\Users\\Antu Sanbui\\Desktop\\project\\Skin_detection_CNN\\Skin cancer ISIC The International Skin Imaging Collaboration\\Train")
 d_test = pathlib.Path("C:\\Users\\Antu Sanbui\\Desktop\\project\\Skin_detection_CNN\\Skin cancer ISIC The International Skin Imaging Collaboration\\Test")
-
-
 
 print("Training data count :",len(list(d_train.glob('*/*.jpg'))))
 print("Testing data count :",len(list(d_test.glob('*/*.jpg'))))
 
-
-
 batch_size = 32
 
 train_ds = tf.keras.preprocessing.image_dataset_from_directory(d_train,batch_size=batch_size,image_size=(180,180),label_mode='categorical',seed=123,subset="training",validation_split=0.2)
-
 val_ds =tf.keras.preprocessing.image_dataset_from_directory(d_train,batch_size=batch_size,image_size=(180,180),label_mode='categorical',seed=123,subset="validation",validation_split=0.2)
 
 class_names = train_ds.class_names
